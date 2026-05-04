@@ -7,10 +7,39 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <main class="page">
+    <!-- Auth screen -->
+    <div id="auth-screen" class="auth-screen hidden">
+      <div class="auth-card">
+        <p class="eyebrow">AI Team Demo</p>
+        <h1>Sign in</h1>
+        <form id="login-form" class="auth-form">
+          <label>
+            Username
+            <input id="login-username" name="username" type="text" autocomplete="username" required />
+          </label>
+          <label>
+            Password
+            <input id="login-password" name="password" type="password" autocomplete="current-password" required />
+          </label>
+          <p id="login-error" class="auth-error hidden">Invalid username or password.</p>
+          <button type="submit">Sign in</button>
+        </form>
+        <p class="auth-hint">Demo accounts: <strong>alice / pass1</strong> or <strong>bob / pass2</strong></p>
+      </div>
+    </div>
+
+    <main class="page hidden">
       <section class="hero">
-        <p class="eyebrow">Demo project</p>
-        <h1>AI-supported team delivery board</h1>
+        <div class="hero-top">
+          <div>
+            <p class="eyebrow">Demo project</p>
+            <h1>AI-supported team delivery board</h1>
+          </div>
+          <div class="user-bar">
+            <span id="user-label" class="user-name"></span>
+            <button id="logout-btn" type="button" class="btn-ghost">Sign out</button>
+          </div>
+        </div>
         <p class="hero-copy">
           A small web demo that shows how a team can capture work items, assign
           ownership, and keep AI-generated work visible and reviewable.
@@ -86,6 +115,6 @@
       </article>
     </template>
 
-    <script src="./app.js"></script>
+    <script src="./app.js" type="module"></script>
   </body>
 </html>

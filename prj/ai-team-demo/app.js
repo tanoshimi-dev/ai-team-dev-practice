@@ -1,3 +1,5 @@
+import { initAuth } from "./auth.js";
+
 const initialTasks = [
   { title: "Draft feature spec", owner: "Human", status: "Planned" },
   { title: "Generate first UI scaffold", owner: "AI", status: "In Progress" },
@@ -62,4 +64,7 @@ taskForm.addEventListener("submit", (event) => {
 
 statusFilter.addEventListener("change", renderTasks);
 
-renderTasks();
+initAuth({
+  onLogin: () => renderTasks(),
+  onLogout: () => { taskList.innerHTML = ""; },
+});
