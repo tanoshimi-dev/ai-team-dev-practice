@@ -303,6 +303,51 @@ button {
   padding-left: 20px;
 }
 
+/* ── Board features: search + audit ──────────────────────────────── */
+
+.board-controls {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: end;
+}
+
+.audit-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.audit-entry {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: baseline;
+  font-size: 0.875rem;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: var(--bg);
+}
+
+.audit-action {
+  font-weight: 700;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.audit-detail {
+  color: var(--text);
+  flex: 1;
+}
+
+.audit-time {
+  color: var(--muted);
+  font-size: 0.8rem;
+  flex-shrink: 0;
+}
+
 /* ── Responsive ──────────────────────────────────────────────────── */
 
 @media (max-width: 700px) {
