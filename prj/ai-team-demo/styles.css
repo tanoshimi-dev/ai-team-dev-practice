@@ -202,6 +202,13 @@ button {
   margin-bottom: 20px;
 }
 
+.board-controls {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: end;
+}
+
 .filter {
   min-width: 180px;
 }

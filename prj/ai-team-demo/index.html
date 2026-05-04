@@ -82,15 +82,21 @@
             <h2>Board</h2>
             <p>Reviewable work with explicit ownership and status.</p>
           </div>
-          <label class="filter">
-            Filter
-            <select id="status-filter">
-              <option value="All">All</option>
-              <option value="Planned">Planned</option>
-              <option value="In Progress">In Progress</option>
-              <option value="Ready for Review">Ready for Review</option>
-            </select>
-          </label>
+          <div class="board-controls">
+            <label class="filter">
+              Search
+              <input id="search-input" type="search" placeholder="Search tasks…" />
+            </label>
+            <label class="filter">
+              Filter
+              <select id="status-filter">
+                <option value="All">All</option>
+                <option value="Planned">Planned</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Ready for Review">Ready for Review</option>
+              </select>
+            </label>
+          </div>
         </div>
         <div id="task-list" class="task-list" aria-live="polite"></div>
       </section>

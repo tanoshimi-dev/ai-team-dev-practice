@@ -5,15 +5,23 @@ const taskList = document.querySelector("#task-list");
 const taskTemplate = document.querySelector("#task-template");
 const taskForm = document.querySelector("#task-form");
 const statusFilter = document.querySelector("#status-filter");
+const searchInput = document.querySelector("#search-input");
 
 let tasks = [];
 
 function renderTasks() {
   const filterValue = statusFilter.value;
-  const visibleTasks =
-    filterValue === "All"
-      ? tasks
-      : tasks.filter((task) => task.status === filterValue);
+  const searchValue = searchInput.value.trim().toLowerCase();
+
+  let visibleTasks = filterValue === "All"
+    ? tasks
+    : tasks.filter((task) => task.status === filterValue);
+
+  if (searchValue) {
+    visibleTasks = visibleTasks.filter((task) =>
+      task.title.toLowerCase().includes(searchValue)
+    );
+  }
 
   taskList.innerHTML = "";
 
@@ -73,6 +81,7 @@ taskForm.addEventListener("submit", (event) => {
 });
 
 statusFilter.addEventListener("change", renderTasks);
+searchInput.addEventListener("input", renderTasks);
 
 initAuth({
   onLogin: () => {
