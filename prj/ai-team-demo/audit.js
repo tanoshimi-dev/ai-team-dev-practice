@@ -1,6 +1,14 @@
 const AUDIT_KEY = "ai_demo_audit";
 const MAX_ENTRIES = 50;
 
+function uuid() {
+  if (typeof crypto !== "undefined" && crypto.randomUUID) return crypto.randomUUID();
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+    const r = Math.random() * 16 | 0;
+    return (c === "x" ? r : (r & 0x3 | 0x8)).toString(16);
+  });
+}
+
 export function loadAudit() {
   const raw = localStorage.getItem(AUDIT_KEY);
   if (!raw) return [];
@@ -14,7 +22,7 @@ export function loadAudit() {
 export function recordAction(action, detail) {
   const entries = loadAudit();
   const entry = {
-    id: crypto.randomUUID(),
+    id: uuid(),
     action,
     detail,
     at: new Date().toISOString(),

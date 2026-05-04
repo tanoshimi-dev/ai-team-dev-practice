@@ -1,9 +1,18 @@
 const STORAGE_KEY = "ai_demo_tasks";
 
+function uuid() {
+  if (typeof crypto !== "undefined" && crypto.randomUUID) return crypto.randomUUID();
+  // Node 18 / older env fallback
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+    const r = Math.random() * 16 | 0;
+    return (c === "x" ? r : (r & 0x3 | 0x8)).toString(16);
+  });
+}
+
 const DEFAULT_TASKS = [
-  { id: crypto.randomUUID(), title: "Draft feature spec", owner: "Human", status: "Planned" },
-  { id: crypto.randomUUID(), title: "Generate first UI scaffold", owner: "AI", status: "In Progress" },
-  { id: crypto.randomUUID(), title: "Review generated changes", owner: "Shared", status: "Ready for Review" },
+  { id: uuid(), title: "Draft feature spec", owner: "Human", status: "Planned" },
+  { id: uuid(), title: "Generate first UI scaffold", owner: "AI", status: "In Progress" },
+  { id: uuid(), title: "Review generated changes", owner: "Shared", status: "Ready for Review" },
 ];
 
 export function loadTasks() {
@@ -21,7 +30,7 @@ function saveTasks(tasks) {
 }
 
 export function addTask(tasks, { title, owner, status }) {
-  const updated = [{ id: crypto.randomUUID(), title, owner, status }, ...tasks];
+  const updated = [{ id: uuid(), title, owner, status }, ...tasks];
   saveTasks(updated);
   return updated;
 }
