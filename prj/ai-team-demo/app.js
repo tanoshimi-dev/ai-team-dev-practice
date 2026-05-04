@@ -1,15 +1,12 @@
-const initialTasks = [
-  { title: "Draft feature spec", owner: "Human", status: "Planned" },
-  { title: "Generate first UI scaffold", owner: "AI", status: "In Progress" },
-  { title: "Review generated changes", owner: "Shared", status: "Ready for Review" },
-];
+import { initAuth } from "./auth.js";
+import { loadTasks, addTask, updateTask, deleteTask } from "./tasks.js";
 
-const taskList = document.querySelector("#task-list");
+const taskList     = document.querySelector("#task-list");
 const taskTemplate = document.querySelector("#task-template");
-const taskForm = document.querySelector("#task-form");
+const taskForm     = document.querySelector("#task-form");
 const statusFilter = document.querySelector("#status-filter");
 
-let tasks = [...initialTasks];
+let tasks = [];
 
 function renderTasks() {
   const filterValue = statusFilter.value;
@@ -29,15 +26,31 @@ function renderTasks() {
   }
 
   visibleTasks.forEach((task) => {
-    const fragment = taskTemplate.content.cloneNode(true);
-    const ownerBadge = fragment.querySelector(".badge-owner");
-    const statusBadge = fragment.querySelector(".badge-status");
-    const title = fragment.querySelector(".task-title");
+    const fragment     = taskTemplate.content.cloneNode(true);
+    const ownerBadge   = fragment.querySelector(".badge-owner");
+    const statusBadge  = fragment.querySelector(".badge-status");
+    const titleEl      = fragment.querySelector(".task-title");
+    const deleteBtn    = fragment.querySelector(".task-delete");
+    const statusSelect = fragment.querySelector(".task-status-select");
 
-    ownerBadge.textContent = task.owner;
+    ownerBadge.textContent  = task.owner;
     statusBadge.textContent = task.status;
     statusBadge.dataset.status = task.status;
-    title.textContent = task.title;
+    titleEl.textContent     = task.title;
+
+    Array.from(statusSelect.options).forEach((opt) => {
+      if (opt.value === task.status) opt.selected = true;
+    });
+
+    statusSelect.addEventListener("change", () => {
+      tasks = updateTask(tasks, task.id, { status: statusSelect.value });
+      renderTasks();
+    });
+
+    deleteBtn.addEventListener("click", () => {
+      tasks = deleteTask(tasks, task.id);
+      renderTasks();
+    });
 
     taskList.appendChild(fragment);
   });
@@ -45,21 +58,25 @@ function renderTasks() {
 
 taskForm.addEventListener("submit", (event) => {
   event.preventDefault();
-
   const formData = new FormData(taskForm);
-  const title = String(formData.get("title")).trim();
-  const owner = String(formData.get("owner"));
+  const title  = String(formData.get("title")).trim();
+  const owner  = String(formData.get("owner"));
   const status = String(formData.get("status"));
-
-  if (!title) {
-    return;
-  }
-
-  tasks = [{ title, owner, status }, ...tasks];
+  if (!title) return;
+  tasks = addTask(tasks, { title, owner, status });
   taskForm.reset();
   renderTasks();
 });
 
 statusFilter.addEventListener("change", renderTasks);
 
-renderTasks();
+initAuth({
+  onLogin: () => {
+    tasks = loadTasks();
+    renderTasks();
+  },
+  onLogout: () => {
+    tasks = [];
+    taskList.innerHTML = "";
+  },
+});

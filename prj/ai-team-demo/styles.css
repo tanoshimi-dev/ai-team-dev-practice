@@ -23,6 +23,54 @@ body {
   color: var(--text);
 }
 
+/* ── Utility ─────────────────────────────────────────────────────── */
+
+.hidden {
+  display: none !important;
+}
+
+/* ── Auth screen ─────────────────────────────────────────────────── */
+
+.auth-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #eef4ff 0%, var(--bg) 100%);
+}
+
+.auth-card {
+  width: min(400px, calc(100% - 32px));
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  padding: 36px;
+}
+
+.auth-card h1 {
+  margin: 0 0 20px;
+}
+
+.auth-form {
+  display: grid;
+  gap: 16px;
+}
+
+.auth-error {
+  margin: 0;
+  color: #b91c1c;
+  font-size: 0.9rem;
+}
+
+.auth-hint {
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+/* ── Page layout ─────────────────────────────────────────────────── */
+
 .page {
   width: min(1040px, calc(100% - 32px));
   margin: 0 auto;
@@ -40,6 +88,41 @@ body {
 .hero {
   padding: 36px;
   margin-bottom: 24px;
+}
+
+.hero-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.user-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.user-name {
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.btn-ghost {
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  padding: 8px 14px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  border-radius: 12px;
+}
+
+.btn-ghost:hover {
+  background: var(--bg);
 }
 
 .eyebrow {
@@ -66,6 +149,8 @@ body {
   padding: 24px;
   margin-bottom: 24px;
 }
+
+/* ── Form controls ───────────────────────────────────────────────── */
 
 .controls {
   display: grid;
@@ -114,6 +199,8 @@ button {
   cursor: pointer;
 }
 
+/* ── Board ───────────────────────────────────────────────────────── */
+
 .panel-heading {
   grid-template-columns: 1fr auto;
   margin-bottom: 20px;
@@ -140,7 +227,35 @@ button {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
+  align-items: center;
   margin-bottom: 12px;
+}
+
+.btn-icon {
+  margin-left: auto;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 0.85rem;
+  padding: 4px 6px;
+  border-radius: 6px;
+  line-height: 1;
+}
+
+.btn-icon:hover {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.task-status-select {
+  width: 100%;
+  margin-top: 10px;
+  padding: 8px 10px;
+  font-size: 0.875rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #fff;
 }
 
 .badge {
@@ -187,6 +302,8 @@ button {
   margin: 16px 0 0;
   padding-left: 20px;
 }
+
+/* ── Responsive ──────────────────────────────────────────────────── */
 
 @media (max-width: 700px) {
   .page {
