@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Team Demo</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="hero">
+        <p class="eyebrow">Demo project</p>
+        <h1>AI-supported team delivery board</h1>
+        <p class="hero-copy">
+          A small web demo that shows how a team can capture work items, assign
+          ownership, and keep AI-generated work visible and reviewable.
+        </p>
+      </section>
+
+      <section class="panel controls">
+        <div>
+          <h2>Add a work item</h2>
+          <p>Create a simple task card for the team board.</p>
+        </div>
+        <form id="task-form" class="task-form">
+          <label>
+            Title
+            <input id="task-title" name="title" type="text" maxlength="60" required />
+          </label>
+          <label>
+            Owner
+            <select id="task-owner" name="owner">
+              <option value="Human">Human</option>
+              <option value="AI">AI</option>
+              <option value="Shared">Shared</option>
+            </select>
+          </label>
+          <label>
+            Status
+            <select id="task-status" name="status">
+              <option value="Planned">Planned</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Ready for Review">Ready for Review</option>
+            </select>
+          </label>
+          <button type="submit">Add item</button>
+        </form>
+      </section>
+
+      <section class="panel">
+        <div class="panel-heading">
+          <div>
+            <h2>Board</h2>
+            <p>Reviewable work with explicit ownership and status.</p>
+          </div>
+          <label class="filter">
+            Filter
+            <select id="status-filter">
+              <option value="All">All</option>
+              <option value="Planned">Planned</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Ready for Review">Ready for Review</option>
+            </select>
+          </label>
+        </div>
+        <div id="task-list" class="task-list" aria-live="polite"></div>
+      </section>
+
+      <section class="panel highlights">
+        <h2>Working agreements</h2>
+        <ul>
+          <li>Keep AI output in small, reviewable units.</li>
+          <li>Use explicit ownership for each work item.</li>
+          <li>Require review before completion.</li>
+        </ul>
+      </section>
+    </main>
+
+    <template id="task-template">
+      <article class="task-card">
+        <div class="task-card__top">
+          <span class="badge badge-owner"></span>
+          <span class="badge badge-status"></span>
+        </div>
+        <h3 class="task-title"></h3>
+      </article>
+    </template>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
