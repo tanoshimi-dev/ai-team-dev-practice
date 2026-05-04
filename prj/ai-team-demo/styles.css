@@ -296,7 +296,43 @@ button {
   line-height: 1.4;
 }
 
-.empty-state {
+.audit-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.audit-entry {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: baseline;
+  font-size: 0.875rem;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: var(--bg);
+}
+
+.audit-action {
+  font-weight: 700;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.audit-detail {
+  color: var(--text);
+  flex: 1;
+}
+
+.audit-time {
+  color: var(--muted);
+  font-size: 0.8rem;
+  flex-shrink: 0;
+}
+
+
   margin: 0;
   color: var(--muted);
 }
