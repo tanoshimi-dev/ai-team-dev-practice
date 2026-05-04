@@ -110,8 +110,14 @@
         <div class="task-card__top">
           <span class="badge badge-owner"></span>
           <span class="badge badge-status"></span>
+          <button type="button" class="task-delete btn-icon" aria-label="Delete task">✕</button>
         </div>
         <h3 class="task-title"></h3>
+        <select class="task-status-select">
+          <option value="Planned">Planned</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Ready for Review">Ready for Review</option>
+        </select>
       </article>
     </template>
 

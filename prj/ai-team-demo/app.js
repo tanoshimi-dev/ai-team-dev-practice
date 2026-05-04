@@ -1,17 +1,12 @@
 import { initAuth } from "./auth.js";
-
-const initialTasks = [
-  { title: "Draft feature spec", owner: "Human", status: "Planned" },
-  { title: "Generate first UI scaffold", owner: "AI", status: "In Progress" },
-  { title: "Review generated changes", owner: "Shared", status: "Ready for Review" },
-];
+import { loadTasks, addTask, updateTask, deleteTask } from "./tasks.js";
 
 const taskList = document.querySelector("#task-list");
 const taskTemplate = document.querySelector("#task-template");
 const taskForm = document.querySelector("#task-form");
 const statusFilter = document.querySelector("#status-filter");
 
-let tasks = [...initialTasks];
+let tasks = [];
 
 function renderTasks() {
   const filterValue = statusFilter.value;
@@ -34,12 +29,29 @@ function renderTasks() {
     const fragment = taskTemplate.content.cloneNode(true);
     const ownerBadge = fragment.querySelector(".badge-owner");
     const statusBadge = fragment.querySelector(".badge-status");
-    const title = fragment.querySelector(".task-title");
+    const titleEl = fragment.querySelector(".task-title");
+    const deleteBtn = fragment.querySelector(".task-delete");
+    const statusSelect = fragment.querySelector(".task-status-select");
 
     ownerBadge.textContent = task.owner;
     statusBadge.textContent = task.status;
     statusBadge.dataset.status = task.status;
-    title.textContent = task.title;
+    titleEl.textContent = task.title;
+
+    // Populate status select and sync badge
+    Array.from(statusSelect.options).forEach((opt) => {
+      if (opt.value === task.status) opt.selected = true;
+    });
+    statusSelect.addEventListener("change", () => {
+      tasks = updateTask(tasks, task.id, { status: statusSelect.value });
+      renderTasks();
+    });
+
+    deleteBtn.dataset.id = task.id;
+    deleteBtn.addEventListener("click", () => {
+      tasks = deleteTask(tasks, task.id);
+      renderTasks();
+    });
 
     taskList.appendChild(fragment);
   });
@@ -53,11 +65,9 @@ taskForm.addEventListener("submit", (event) => {
   const owner = String(formData.get("owner"));
   const status = String(formData.get("status"));
 
-  if (!title) {
-    return;
-  }
+  if (!title) return;
 
-  tasks = [{ title, owner, status }, ...tasks];
+  tasks = addTask(tasks, { title, owner, status });
   taskForm.reset();
   renderTasks();
 });
@@ -65,6 +75,12 @@ taskForm.addEventListener("submit", (event) => {
 statusFilter.addEventListener("change", renderTasks);
 
 initAuth({
-  onLogin: () => renderTasks(),
-  onLogout: () => { taskList.innerHTML = ""; },
+  onLogin: () => {
+    tasks = loadTasks();
+    renderTasks();
+  },
+  onLogout: () => {
+    tasks = [];
+    taskList.innerHTML = "";
+  },
 });
